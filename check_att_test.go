@@ -1,8 +1,6 @@
-package helpers_test
+package helpers
 
 import (
-	"github.com/moemoe89/go-helpers"
-
 	"strings"
 	"testing"
 	"time"
@@ -26,7 +24,7 @@ type UserModel struct {
 func TestCheckInDBAtt(t *testing.T) {
 	selectField := ""
 	filterField := UserSelectField
-	res := helpers.CheckInTag(UserModel{}, filterField, "db")
+	res := CheckInTag(UserModel{}, filterField, "db")
 	if len(res) > 0 {
 		selectField = strings.Join(res, ",")
 	}
@@ -36,7 +34,7 @@ func TestCheckInDBAtt(t *testing.T) {
 
 func TestCheckMatchDBAtt(t *testing.T) {
 	selectField := "id"
-	field := helpers.CheckMatchTag(UserModel{}, selectField, "db")
+	field := CheckMatchTag(UserModel{}, selectField, "db")
 
 	assert.Equal(t, selectField, field)
 }

@@ -1,8 +1,6 @@
-package helpers_test
+package helpers
 
 import (
-	"github.com/moemoe89/go-helpers"
-
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,7 +8,7 @@ import (
 
 func TestOrderByHandler(t *testing.T) {
 	selectField := "id"
-	orderBy := helpers.OrderByHandler(selectField, "db", UserModel{})
+	orderBy := OrderByHandler(selectField, "db", UserModel{})
 	expectedOrderBy := "id ASC"
 
 	assert.Equal(t, expectedOrderBy, orderBy)
@@ -18,7 +16,7 @@ func TestOrderByHandler(t *testing.T) {
 
 func TestOrderByHandlerDesc(t *testing.T) {
 	selectField := "-id"
-	orderBy := helpers.OrderByHandler(selectField, "db", UserModel{})
+	orderBy := OrderByHandler(selectField, "db", UserModel{})
 	expectedOrderBy := "id DESC"
 
 	assert.Equal(t, expectedOrderBy, orderBy)
@@ -26,7 +24,7 @@ func TestOrderByHandlerDesc(t *testing.T) {
 
 func TestOrderByHandleEmptyField(t *testing.T) {
 	selectField := ""
-	orderBy := helpers.OrderByHandler(selectField, "db", UserModel{})
+	orderBy := OrderByHandler(selectField, "db", UserModel{})
 	expectedOrderBy := ""
 
 	assert.Equal(t, expectedOrderBy, orderBy)
@@ -34,7 +32,7 @@ func TestOrderByHandleEmptyField(t *testing.T) {
 
 func TestOrderByHandleNotFoundField(t *testing.T) {
 	selectField := "x"
-	orderBy := helpers.OrderByHandler(selectField, "db", UserModel{})
+	orderBy := OrderByHandler(selectField, "db", UserModel{})
 	expectedOrderBy := ""
 
 	assert.Equal(t, expectedOrderBy, orderBy)
