@@ -85,7 +85,7 @@ func TestDoRequestErrEmptyURL(t *testing.T) {
 
 	_, err := DoRequest(opt, nil)
 
-	expt := `Get : unsupported protocol scheme ""`
+	expt := `Get "": unsupported protocol scheme ""`
 	if err.Error() != expt {
 		t.Error("expected", expt, "got", err.Error())
 	}
