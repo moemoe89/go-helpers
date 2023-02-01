@@ -51,3 +51,5 @@ inuit_rsa.pub
 
 # out
 *.out
+
+pkg/diskstorage/test_download.txt
