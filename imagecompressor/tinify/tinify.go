@@ -8,7 +8,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/moemoe89/go-helpers/pkg/imagecompressor"
+	"github.com/moemoe89/go-helpers/imagecompressor"
 )
 
 // apiURL is API URL for Tinify

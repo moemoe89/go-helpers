@@ -79,6 +79,18 @@ func (mr *GoMockDiskStorageMockRecorder) GetBuffer() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBuffer", reflect.TypeOf((*GoMockDiskStorage)(nil).GetBuffer))
 }
 
+// ResetBuffer mocks base method.
+func (m *GoMockDiskStorage) ResetBuffer() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "ResetBuffer")
+}
+
+// ResetBuffer indicates an expected call of ResetBuffer.
+func (mr *GoMockDiskStorageMockRecorder) ResetBuffer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ResetBuffer", reflect.TypeOf((*GoMockDiskStorage)(nil).ResetBuffer))
+}
+
 // Write mocks base method.
 func (m *GoMockDiskStorage) Write(chunk []byte) error {
 	m.ctrl.T.Helper()

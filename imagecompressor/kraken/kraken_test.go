@@ -1,4 +1,4 @@
-package tinify
+package kraken
 
 import (
 	"bytes"
@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/moemoe89/go-helpers/pkg/imagecompressor"
+	"github.com/moemoe89/go-helpers/imagecompressor"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -58,7 +58,10 @@ func TestNew(t *testing.T) {
 
 			return test{
 				args: args{
-					opts: defaultOptions,
+					opts: []Option{
+						WithAPIKey("api-key"),
+						WithAPISecret("api-secret"),
+					},
 				},
 				wantErr: nil,
 			}
@@ -121,24 +124,36 @@ func TestUpload(t *testing.T) {
 					mock: &mockedHTTPClient{
 						response: &http.Response{
 							Body: io.NopCloser(strings.NewReader(`{
-								"input": {
-									"size": 1024,
-									"type": "image/jpeg"
-								},
-								"output": {
-									"size": 512,
-									"type": "image/png",
-									"width": 100,
-									"height": 100,
-									"ratio": 0.5,
-									"url": "https://api.tinify.com/output/2xnsp7jn34e5"
-								}
+								"file_name": "00be1888-702e-4d86-bfc9-58663d8653da",
+								"original_size": 188158,
+								"kraked_size": 108425,
+								"saved_bytes": 79733,
+								"kraked_url": "https://dl.kraken.io/api/f9/d2/7b/test",
+								"original_width": 446,
+								"original_height": 532,
+								"kraked_width": 446,
+								"kraked_height": 532,
+								"success": true
 							}`)),
 						},
 					},
 				},
-				want:    &imagecompressor.CompressedFile{URL: "https://api.tinify.com/output/2xnsp7jn34e5"},
+				want:    &imagecompressor.CompressedFile{URL: "https://dl.kraken.io/api/f9/d2/7b/test"},
 				wantErr: nil,
+			}
+		},
+		"Failed to do io.Copy file": func(t *testing.T) test {
+			t.Helper()
+
+			return test{
+				args: args{
+					ctx: context.Background(),
+					file: &errorReader{
+						err: errInternal,
+					},
+				},
+				want:    nil,
+				wantErr: errInternal,
 			}
 		},
 		"Failed to create HTTP request": func(t *testing.T) test {
@@ -225,8 +240,8 @@ func TestUpload(t *testing.T) {
 					mock: &mockedHTTPClient{
 						response: &http.Response{
 							Body: io.NopCloser(strings.NewReader(`{
-								"error": "Something error",
-								"message": "Please try again"
+								"success": false,
+								"message": "Only support image type"
 							}`)),
 						},
 					},

@@ -140,6 +140,8 @@ func TestWriteAndWriteFile(t *testing.T) {
 		if string(fileData) != string(data) {
 			t.Errorf("File data does not match expected data. Got %s, expected %s", fileData, data)
 		}
+
+		d.ResetBuffer()
 	}
 
 	tests := map[string]func(t *testing.T) test{

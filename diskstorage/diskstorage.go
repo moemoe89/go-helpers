@@ -25,7 +25,12 @@ type DiskStorage interface {
 	Download(ctx context.Context, targetURL, filePath string) error
 	// Delete removes the file at the given file path.
 	Delete(filePath string) error
+	// ResetBuffer the buffer value.
+	ResetBuffer()
 }
+
+// compile time interface implementation check.
+var _ DiskStorage = (*diskStorage)(nil)
 
 var (
 	// errFailedSetBuffer is an error message when failed to set buffer.
@@ -111,4 +116,9 @@ func (d *diskStorage) Download(ctx context.Context, targetURL, filePath string) 
 // Delete removes the file at the given file path.
 func (d *diskStorage) Delete(filePath string) error {
 	return os.Remove(filePath)
+}
+
+// ResetBuffer the buffer value.
+func (d *diskStorage) ResetBuffer() {
+	d.buffer.Reset()
 }
